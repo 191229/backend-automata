@@ -1,18 +1,9 @@
-from django.http import HttpResponse
-import string, random
 
+from rest_framework.viewsets import ModelViewSet
+from home.serializers import PostSerializer
+import json
+from home.models import Post
 
-def maquina(request):
-        arreglo = []
-        for i in x: 
-            dato = secrets.choice(string.ascii_letters)
-            arreglo.append(dato)
-            
-        print(arreglo)
-        return HttpResponse("Hello, Django!")
-
-def automata():
-    ...
-    
-def lexico():
-    ...
+class PostApiViewSet(ModelViewSet):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()

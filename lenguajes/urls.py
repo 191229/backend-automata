@@ -1,8 +1,9 @@
 from django.contrib import admin
-from django.urls import include, path
-
+from django.urls import path
+from django.conf.urls import include
+from home.router import router_posts
 
 urlpatterns = [
-    path("", include("home.urls")),
+    path('home/', include(router_posts.urls)),
     path('admin/', admin.site.urls),
 ]
