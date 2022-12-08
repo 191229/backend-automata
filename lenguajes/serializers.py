@@ -4,5 +4,5 @@ from lenguajes.models import Post
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['first','second', 'three', 'fourth']
+        fields = ['conjunto']
             

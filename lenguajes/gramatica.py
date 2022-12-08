@@ -12,10 +12,10 @@ class conjuntosal():
         if conjunto == 1:
             vran1=random.randint(1,36)
             correctos = CFG.fromstring("""
-                        S -> KI VC  KF 
-                        KI -> '{' 
+                        A -> KE VC  KS 
+                        KE -> '{' 
                         VC -> V C
-                        KF -> '}'
+                        KS -> '}'
                         V -> ' 1' | ' 2' | ' 3' | ' 4' | ' 5' | ' 6' | ' 7' | ' 8' | ' 9' | ' 0' | ' a' | ' b' | ' c' | ' d' | ' e' | ' f' | ' g' | ' h' | ' i' | ' j' | ' k' | ' l' | ' m' | ' n' | ' o' | ' p' | ' q' | ' r'| ' s' | ' t' | ' u' | ' v' | ' w' | ' x' | ' y' | ' z' 
                         C -> ''
                     """)
@@ -32,10 +32,10 @@ class conjuntosal():
         elif conjunto == 2:
             vran1=random.randint(1,999)
             correctos = CFG.fromstring("""
-                        S -> KI VC V KF 
-                        KI -> '{' 
+                        A -> KE VC V KS 
+                        KE -> '{' 
                         VC -> V C
-                        KF -> '}'
+                        KS -> '}'
                         V -> ' 1' | ' 2' | ' 3' | ' 4' | ' 5' | ' 6' | ' 7' | ' 8' | ' 9' | ' 0' | ' a' | ' b' | ' c' | ' d' | ' e' | ' f' | ' g' | ' h' | ' i' | ' j' | ' k' | ' l' | ' m' | ' n' | ' o' | ' p' | ' q' | ' r'| ' s' | ' t' | ' u' | ' v' | ' w' | ' x' | ' y' | ' z' 
                         C -> ','
                     """)
@@ -51,10 +51,10 @@ class conjuntosal():
         elif conjunto == 3:
             vran1=random.randint(1,999)
             correctos = CFG.fromstring("""
-                        S -> KI VC VC V KF 
-                        KI -> '{' 
+                        A -> KE VC VC V KS 
+                        KE -> '{' 
                         VC -> V C
-                        KF -> '}'
+                        KS -> '}'
                         V -> ' 1' | ' 2' | ' 3' | ' 4' | ' 5' | ' 6' | ' 7' | ' 8' | ' 9' | ' 0' | ' a' | ' b' | ' c' | ' d' | ' e' | ' f' | ' g' | ' h' | ' i' | ' j' | ' k' | ' l' | ' m' | ' n' | ' o' | ' p' | ' q' | ' r'| ' s' | ' t' | ' u' | ' v' | ' w' | ' x' | ' y' | ' z' 
                         C -> ','
                     """)
@@ -69,10 +69,10 @@ class conjuntosal():
         elif conjunto == 4:
             vran1=random.randint(1,9999)
             correctos = CFG.fromstring("""
-                        S -> KI VC VC VC V KF 
-                        KI -> '{' 
+                        A -> KE VC VC VC V KS 
+                        KE -> '{' 
                         VC -> V C
-                        KF -> '}'
+                        KS -> '}'
                         V -> ' 1' | ' 2' | ' 3' | ' 4' | ' 5' | ' 6' | ' 7' | ' 8' | ' 9' | ' 0' | ' a' | ' b' | ' c' | ' d' | ' e' | ' f' | ' g' | ' h' | ' i' | ' j' | ' k' | ' l' | ' m' | ' n' | ' o' | ' p' | ' q' | ' r'| ' s' | ' t' | ' u' | ' v' | ' w' | ' x' | ' y' | ' z' 
                         C -> ','
                     """)
@@ -84,3 +84,22 @@ class conjuntosal():
             resultado = conjuntos[vran1]
             resultado = resultado.replace(" ","")
             return resultado
+            
+            
+            
+    
+
+                        
+
+            
+  
+
+
+
+
+
+
+
+
+
+

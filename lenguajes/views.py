@@ -6,9 +6,11 @@ from rest_framework.response import Response
 from rest_framework import status
 
 #####
-from re import A
+import re 
 from lenguajes.maquina import TuringMachine
 from lenguajes.gramatica import conjuntosal
+from lenguajes.automataconjunto import automataconjunto
+from lenguajes.automataparticiones import automataparticiones
 import json, os
 tm = TuringMachine.parse(os.path.join('turing','transicion.tm'))
 
@@ -42,15 +44,24 @@ matriz_cuatro = [["I"],
 cadena = []
 
 
-
 def main():
+    senal = "personalisado"
+    
+    if senal == "personalisado":
+        conjunto = "{a,c}"
+        ingresado = automataconjunto.automata(conjunto)
+        crearparticiones(ingresado)
+       
+        
+        
+    elif senal == "aletorio":
+        resultado = conjuntosal.conjunto()
+        crearparticiones(resultado)
+        
+        
+     
+def crearparticiones(entrada): 
     i = 0
-    resultado = conjuntosal.conjunto()
-    #entrada json
-    entrada = resultado
-    
-    array_json_conjunto = json.dumps(entrada) 
-    
     while i < len(entrada):
          #se remplazan valores para limpiar el texto            
          lin = entrada
@@ -144,27 +155,54 @@ def particiones(val):
             cont += j 
              
     arregloparticion.append(cont)
-         
+    
+
+
 class ReloadPague(APIView):
     main()
 
 class GetParticiones(APIView):
     def get(self, response):
-        array_json = json.dumps(arregloparticion) 
-        
+       
+        array_json = json.dumps(arregloparticion)
         print(array_json)
-        return Response(array_json, status=status.HTTP_200_OK)
+        i=0
+        while i < len(array_json):           
+            lin = array_json
+            lin = lin.replace("[","")
+            lin = lin.replace('"','')
+            lin = lin.replace("]","")
+            i = i + 1
+        
+        return Response(lin, status=status.HTTP_200_OK)
     
 class GetConjunto(APIView):
-    def get(self, response):
-        return Response(arregloparticion[0], status=status.HTTP_200_OK)
-    
+    def get(self, response): 
         
+        conjunto1 = arregloparticion[0]
+        i=0
+        while i < len(conjunto1):           
+            lin = conjunto1
+            lin = lin.replace("[","")
+            lin = lin.replace('"','')
+            lin = lin.replace("]","")
+            i = i + 1
+            
+        
+        return Response(lin, status=status.HTTP_200_OK)
     
+# class PostParticiones(APIView):
+#     def post(self, response):
+  
+class PostParticiones(APIView): 
     
-    
-    
-    
-    
-    
-    
+    def post(self, request):
+        
+        print(request.data)
+        serializer = PostSerializer(data = request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response("Bien", status=status.HTTP_200_OK)
+
+        return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
