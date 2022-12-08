@@ -12,8 +12,6 @@ from lenguajes.gramatica import conjuntosal
 import json, os
 tm = TuringMachine.parse(os.path.join('turing','transicion.tm'))
 
-
-
 arregloparticion = []
 matriz_uno =[["A"]]
 
@@ -43,8 +41,7 @@ matriz_cuatro = [["I"],
                  ["Y"]]
 cadena = []
 
-def jsonConvert():
-    ...
+
 
 def main():
     i = 0
@@ -52,7 +49,7 @@ def main():
     #entrada json
     entrada = resultado
     
-    
+    array_json_conjunto = json.dumps(entrada) 
     
     while i < len(entrada):
          #se remplazan valores para limpiar el texto            
@@ -148,20 +145,19 @@ def particiones(val):
              
     arregloparticion.append(cont)
          
-main()
+class ReloadPague(APIView):
+    main()
 
 class GetParticiones(APIView):
-    
     def get(self, response):
         array_json = json.dumps(arregloparticion) 
         
-        serializer_class = PostSerializer()
-        queryset = Post.objects.all()
         print(array_json)
         return Response(array_json, status=status.HTTP_200_OK)
     
 class GetConjunto(APIView):
-    ...
+    def get(self, response):
+        return Response(arregloparticion[0], status=status.HTTP_200_OK)
     
         
     
