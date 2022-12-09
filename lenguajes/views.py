@@ -5,16 +5,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-#####
+
 import re 
 from lenguajes.maquina import TuringMachine
 from lenguajes.gramatica import conjuntosal
 from lenguajes.automataconjunto import automataconjunto
+from lenguajes.generarfaloso import generafalso
 from lenguajes.automataparticiones import automataparticiones
 import json, os
 tm = TuringMachine.parse(os.path.join('turing','transicion.tm'))
 
-arregloparticion = []
+
+#///////////////////////////////////////////////////valores de mapeo para lasparticiones//////////////////
 matriz_uno =[["A"]]
 
 matriz_dos = [["B"], 
@@ -41,26 +43,34 @@ matriz_cuatro = [["I"],
                  ["W"],
                  ["X"],    
                  ["Y"]]
+
+#///////////////////////////////////////////////////////arreglos usados///////////////////////////////////////////////////
 cadena = []
+particionesmal = []
+arregloparticion = []
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-def main():
-    senal = "personalisado"
-    
-    if senal == "personalisado":
-        conjunto = "{a,c}"
-        ingresado = automataconjunto.automata(conjunto)
+def personalisado(conjunto):  
+    ingresado = automataconjunto.automata(conjunto)
+    if ingresado == "cadena no valida":
+        mensaje = "ingrese de nuevo el conjunto"
+        return mensaje
+    else:
         crearparticiones(ingresado)
-       
+        parti()
         
         
-    elif senal == "aletorio":
-        resultado = conjuntosal.conjunto()
-        crearparticiones(resultado)
-        
-        
+def aletorio():
+    conju = ""
+    conju = conjuntosal.conjunto()
+    crearparticiones(conju)
+    parti()
+    
+    
      
-def crearparticiones(entrada): 
+def crearparticiones(entrada):
+    cadena.clear() 
     i = 0
     while i < len(entrada):
          #se remplazan valores para limpiar el texto            
@@ -103,7 +113,7 @@ def crearparticiones(entrada):
             data = str(data)
             particiones(data)   
   
-        
+#//////////////////////limpieesa de valores //////////////////////////////////////////////////////        
 def limpiarvalores(entrada):
     i=0 
     parseo = str(entrada)
@@ -123,6 +133,7 @@ def limpiarvalores(entrada):
     
     return lin
 
+#//////////////////////////particiones guardadas de la maquina////////////////////////////////////////////
 def particiones(val):
     i=0 
     parseo = val
@@ -130,7 +141,6 @@ def particiones(val):
             #se remplazan valores para limpiar el texto            
             lin = parseo
             lin = lin.replace("[","")
-            
             lin = lin.replace("]","")
             lin = lin.replace("'","")
             lin = lin.replace("'","")
@@ -139,9 +149,8 @@ def particiones(val):
             
             #print(lista[i])
             i = i + 1
+            
     cont = ""
-    
-    
     for j in lin:
         
         if j == "{":
@@ -157,28 +166,36 @@ def particiones(val):
     arregloparticion.append(cont)
     
 
+def parti():
+     for i in range(len(arregloparticion)):
+        print(arregloparticion[i])
 
-class ReloadPague(APIView):
-    main()
+def generarerroneos():
+    for i in range(3):
+        conjuntomal = generafalso.generarfalsos()
+        particionesmal.append(conjuntomal)
+
+#////////////////////////////////////////clases de view para front//////////////////////////////////////////////////////
+#maquina respuesta de particiones
+#devuelve las particiones del conjunto añadido
 
 class GetParticiones(APIView):
     def get(self, response):
-       
-        array_json = json.dumps(arregloparticion)
-        print(array_json)
-        i=0
-        while i < len(array_json):           
-            lin = array_json
-            lin = lin.replace("[","")
-            lin = lin.replace('"','')
-            lin = lin.replace("]","")
-            i = i + 1
- 
-        return Response(lin, status=status.HTTP_200_OK)
-    
-class GetConjunto(APIView):
-    def get(self, response): 
+        res = {
+            "verdadero" : arregloparticion,
+            "falso" : particionesmal
+        }
         
+        return Response(res, status=status.HTTP_200_OK)
+        
+#genera conjuntoaletorio
+class GetConjunto(APIView):
+    def get(self, response):
+        particionesmal.clear()
+        arregloparticion.clear()
+       
+        aletorio()
+        generarerroneos()
         conjunto1 = arregloparticion[0]
         i=0
         while i < len(conjunto1):           
@@ -191,17 +208,22 @@ class GetConjunto(APIView):
         
         return Response(lin, status=status.HTTP_200_OK)
     
-# class PostParticiones(APIView):
-#     def post(self, response):
-  
+#automata validando
+
+#resive el conjunto del usuario        
+aut_conjunto = ""
 class PostConjunto(APIView): 
     def post(self, request):
-        
-        print(request.data)
-        serializer = PostSerializer(data = request.data)
-        
-        if serializer.is_valid():
-            serializer.save()
-            return Response("Bien", status=status.HTTP_200_OK)
+        aut_conjunto = request.data['conjunto']
+        arregloparticion.clear()
+        mensaje = personalisado(aut_conjunto)
+        return Response(mensaje, status=status.HTTP_200_OK)
+ 
 
-        return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
+# aut_particion = ""
+# class PostParticion(APIView): 
+#     def post(self, request):
+#         aut_particion = request.data['conjunto']
+                
+#         return Response("mensaje", status=status.HTTP_200_OK)
+   
