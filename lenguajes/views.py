@@ -1,6 +1,6 @@
 from lenguajes.serializers import PostSerializer
 import json
-from lenguajes.models import Post
+from lenguajes.models import Conjunto
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -173,7 +173,7 @@ class GetParticiones(APIView):
             lin = lin.replace('"','')
             lin = lin.replace("]","")
             i = i + 1
-        
+ 
         return Response(lin, status=status.HTTP_200_OK)
     
 class GetConjunto(APIView):
@@ -194,8 +194,7 @@ class GetConjunto(APIView):
 # class PostParticiones(APIView):
 #     def post(self, response):
   
-class PostParticiones(APIView): 
-    
+class PostConjunto(APIView): 
     def post(self, request):
         
         print(request.data)

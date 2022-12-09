@@ -1,8 +1,15 @@
 from rest_framework import serializers
-from lenguajes.models import Post
+from lenguajes.models import Conjunto
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = Conjunto
         fields = ['conjunto']
-            
+
+# from rest_framework import serializers
+# from familia_conjuntos.models import fam_conjuntosModel
+
+# class fam_conjuntosSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = fam_conjuntosModel
+#         fields = ('conjunto',) 
