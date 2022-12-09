@@ -4,12 +4,19 @@ from nltk.corpus import words
 import random
 
 conjuntos = []
-
+conjunto1 =[]
+conjunto2 = []
+conjunto3 = []
 class conjuntosal():
     
     def conjunto():
-        conjunto = random.randint(1,4)
-        if conjunto == 1:
+        
+        conjuntoval = random.randint(1,4)
+        print(conjuntoval)
+        if conjuntoval == 1:
+            vran1 = 0
+            valor= ""
+            conjuntos.clear()
             vran1=random.randint(1,36)
             correctos = CFG.fromstring("""
                         A -> KE VC  KS 
@@ -22,15 +29,18 @@ class conjuntosal():
                 
             for s in generate(correctos,n=999):
                         valor = ''.join(s)
+                        
                         conjuntos.append(valor)
-            resultado = conjuntos[vran1]
-            resultado = resultado.replace(" ","")
+            resultado1 = conjuntos[vran1]
+            resultado1 = resultado1.replace(" ","")
             
-            return resultado
+            return resultado1
             
             
-        elif conjunto == 2:
-            vran1=random.randint(1,999)
+        elif conjuntoval == 2:
+            conjunto1.clear()
+            valor1 = ""
+            vran2=random.randint(1,999)
             correctos = CFG.fromstring("""
                         A -> KE VC V KS 
                         KE -> '{' 
@@ -40,16 +50,18 @@ class conjuntosal():
                         C -> ','
                     """)
             for s in generate(correctos,n=999):
-                        valor = ''.join(s)
-                        conjuntos.append(valor)
+                        valor1 = ''.join(s)
+                        conjunto1.append(valor1)
 
-            resultado = conjuntos[vran1]
-            resultado = resultado.replace(" ","")
-            return resultado
+            resultado2 = conjunto1[vran2]
+            resultado2 = resultado2.replace(" ","")
+            return resultado2
             
             
-        elif conjunto == 3:
-            vran1=random.randint(1,999)
+        elif conjuntoval == 3:
+            conjunto2.clear()
+            valor2 = ""
+            vran3=random.randint(1,999)
             correctos = CFG.fromstring("""
                         A -> KE VC VC V KS 
                         KE -> '{' 
@@ -59,16 +71,20 @@ class conjuntosal():
                         C -> ','
                     """)
             for s in generate(correctos,n=9999):
-                        valor = ''.join(s)
-                        conjuntos.append(valor)
+                        valor2 = ''.join(s)
+                        conjunto3.append(valor2)
 
-            resultado = conjuntos[vran1]
-            resultado = resultado.replace(" ","")
-            return resultado
+            resultado3 = conjunto3[vran3]
+            resultado3 = resultado3.replace(" ","")
+            return resultado3
             
-        elif conjunto == 4:
-            vran1=random.randint(1,9999)
-            correctos = CFG.fromstring("""
+        elif conjuntoval == 4:
+            conjunto3.clear()
+            valor3 = ""
+            correctos4 = ""
+            
+            vran4=random.randint(1,9999)
+            correctos4 = CFG.fromstring("""
                         A -> KE VC VC VC V KS 
                         KE -> '{' 
                         VC -> V C
@@ -77,13 +93,14 @@ class conjuntosal():
                         C -> ','
                     """)
             
-            for s in generate(correctos,n=99999):
-                        valor = ''.join(s)
-                        conjuntos.append(valor)
+            for s in generate(correctos4,n=99999):
+                        valor3 = ''.join(s)
+                        conjunto3.append(valor3)
 
-            resultado = conjuntos[vran1]
-            resultado = resultado.replace(" ","")
-            return resultado
+            resultado4 = conjunto3[vran4]
+            resultado4 = resultado4.replace(" ","")
+            print(resultado4)
+            return resultado4
             
             
             
