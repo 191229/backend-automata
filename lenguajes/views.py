@@ -48,6 +48,7 @@ matriz_cuatro = [["I"],
 cadena = []
 particionesmal = []
 arregloparticion = []
+entradaparti = []
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -182,7 +183,7 @@ def generarerroneos():
 class GetParticiones(APIView):
     def get(self, response):
         res = {
-            "verdadero" : arregloparticion,
+            "verdadero" : arregloparticion[0],
             "falso" : particionesmal
         }
         
@@ -193,33 +194,64 @@ class GetConjunto(APIView):
     def get(self, response):
         particionesmal.clear()
         arregloparticion.clear()
-       
         aletorio()
         generarerroneos()
         conjunto1 = arregloparticion[0]
-        i=0
-        while i < len(conjunto1):           
-            lin = conjunto1
-            lin = lin.replace("[","")
-            lin = lin.replace('"','')
-            lin = lin.replace("]","")
-            i = i + 1
-            
         
-        return Response(lin, status=status.HTTP_200_OK)
+        return Response(conjunto1, status=status.HTTP_200_OK)
     
 #automata validando
 
-#resive el conjunto del usuario        
+#resive el conjunto del usuario 
+
 aut_conjunto = ""
 class PostConjunto(APIView): 
     def post(self, request):
-        aut_conjunto = request.data['conjunto']
+        aut_conjunto = request.data['conjuntos']
         arregloparticion.clear()
-        mensaje = personalisado(aut_conjunto)
-        return Response(mensaje, status=status.HTTP_200_OK)
+        mensaj = personalisado(aut_conjunto)
+        # if mensaj == "ingrese de nuevo el conjunto":
+        #     print(mensaj)
+        #     return Response(mensaj, status=status.HTTP_200_OK)
+            
+        # else:
+        return Response(arregloparticion, status=status.HTTP_200_OK)
  
+class PostParticiones(APIView): 
+    def post(self, request):
+        particionadd = ""
+        entradaparti.clear()
+        particionadd =  request.data['particion']
+        elbueno = str(particionadd)
+        value = elbueno.split(" ")
 
+        for i in range(len(value)):
+            entradaparti.append(value[i])
+
+        for i in range(len(entradaparti)):
+            respues = automataparticiones.automata(entradaparti[i])
+            if respues == "cadena no valida":
+                print("escribe bien pendejo")
+                mensajeaviso = "Escribe bien tu respuesta"
+                mensaj =  str(mensajeaviso)
+                return Response(mensaj, status=status.HTTP_200_OK)
+
+            else:
+              if respues in arregloparticion:
+                  print("las particiones estan corretas", respues)
+                  mensajeexito = "excelente todas estan correctas"
+                  mensa = str (mensajeexito)
+                  
+              else:
+                  valor = respues
+                  print("incorrecto", valor)
+                  mensajeerror = "una de las particiones esta mal"
+                  men = str(mensajeerror)
+                  return Response(mensajeerror, status=status.HTTP_200_OK)
+
+        return Response(mensa, status=status.HTTP_200_OK)
+
+        
 # aut_particion = ""
 # class PostParticion(APIView): 
 #     def post(self, request):

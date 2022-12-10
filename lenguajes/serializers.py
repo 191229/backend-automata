@@ -4,7 +4,7 @@ from lenguajes.models import Conjunto
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conjunto
-        fields = ['conjunto']
+        fields = ['conjuntos']
 
 # from rest_framework import serializers
 # from familia_conjuntos.models import fam_conjuntosModel
